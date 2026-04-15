@@ -1,9 +1,11 @@
-package com.example.paircanvas.network
+package dev.anewbhav.paircanvas.network
 
+import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import io.ktor.server.response.respondText
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
@@ -41,6 +43,9 @@ fun main() {
         val rooms = ConcurrentHashMap<String, MutableList<DefaultWebSocketServerSession>>()
 
         routing {
+            get("/health") {
+                call.respondText("OK", ContentType.Text.Plain)
+            }
             webSocket("/ws") {
                 var userRoomId: String? = null
 

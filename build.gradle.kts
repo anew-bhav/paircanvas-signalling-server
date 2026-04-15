@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.2.0"
     kotlin("plugin.serialization") version "1.9.22"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "org.example"
@@ -21,6 +22,14 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+tasks.shadowJar {
+    manifest {
+        attributes["Main-Class"] = "dev.anewbhav.paircanvas.network.ServerKt"
+    }
+    archiveClassifier.set("")
+}
+
 kotlin {
-    jvmToolchain(24)
+    jvmToolchain(21)
 }
