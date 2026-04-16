@@ -25,6 +25,7 @@ sealed class SignalingMessage {
     @Serializable object PeerJoined : SignalingMessage()
     @Serializable object PeerLeft : SignalingMessage()
     @Serializable object RoomFull : SignalingMessage()
+    @Serializable object SessionEnded : SignalingMessage()
     @Serializable data class Offer(val sdp: String, val roomId: String) : SignalingMessage()
     @Serializable data class Answer(val sdp: String, val roomId: String) : SignalingMessage()
     @Serializable data class IceCandidate(
@@ -151,7 +152,8 @@ fun main() {
 
                                 is SignalingMessage.Offer,
                                 is SignalingMessage.Answer,
-                                is SignalingMessage.IceCandidate -> {
+                                is SignalingMessage.IceCandidate,
+                                is SignalingMessage.SessionEnded -> {
                                     userRoomId?.let { roomId ->
                                         rooms[roomId]?.let { room ->
                                             room.lastActivityAt = System.currentTimeMillis()
