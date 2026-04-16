@@ -66,7 +66,7 @@ fun main() {
                                     val room = rooms.getOrPut(message.roomId) { mutableListOf() }
                                     room.add(this)
 
-                                    val isOfferer = room.size == 1
+                                    val isOfferer = room.size == 2  // New peer is offerer when joining room with existing participant
                                     sendSerialized<SignalingMessage>(SignalingMessage.Joined(isOfferer))
                                     println("SERVER: User joined room ${message.roomId}. Offerer: $isOfferer")
 
