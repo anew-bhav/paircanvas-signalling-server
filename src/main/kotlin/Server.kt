@@ -76,6 +76,33 @@ fun main() {
                 call.respondText("OK", ContentType.Text.Plain)
             }
 
+            get("/join/{roomId}") {
+                val roomId = call.parameters["roomId"]
+                    ?: return@get call.respond(HttpStatusCode.BadRequest, "Missing roomId")
+                call.respondText(
+                    contentType = ContentType.Text.Html,
+                    text = """
+                        <!DOCTYPE html>
+                        <html>
+                        <head>
+                            <meta http-equiv="refresh" content="0;url=paircanvas://join/$roomId">
+                            <title>Opening PairCanvas...</title>
+                            <style>
+                                body { font-family: sans-serif; display: flex; flex-direction: column;
+                                       align-items: center; justify-content: center; height: 100vh; margin: 0; }
+                                a { color: #6366F1; font-size: 1.2rem; text-decoration: none; padding: 12px 24px;
+                                    border: 2px solid #6366F1; border-radius: 8px; }
+                            </style>
+                        </head>
+                        <body>
+                            <p>Opening PairCanvas...</p>
+                            <a href="paircanvas://join/$roomId">Tap here if it doesn't open</a>
+                        </body>
+                        </html>
+                    """.trimIndent()
+                )
+            }
+
             get("/rooms/{roomId}") {
                 val roomId = call.parameters["roomId"]
                     ?: return@get call.respond(HttpStatusCode.BadRequest, "Missing roomId")
