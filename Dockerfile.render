@@ -1,15 +1,13 @@
-# Build stage
-FROM eclipse-temurin:21-jdk AS build
+# Production Dockerfile for Render using pre-built base image
+FROM anubhav8421/gradle-java21:8.5 AS build
 WORKDIR /app
 
-# Install gradle manually
-RUN apt-get update && apt-get install -y wget unzip && \
-    wget https://services.gradle.org/distributions/gradle-8.5-bin.zip && \
-    unzip gradle-8.5-bin.zip && rm gradle-8.5-bin.zip
-ENV PATH=$PATH:/app/gradle-8.5/bin
-
+# Copy dependencies first for caching
 COPY build.gradle.kts settings.gradle.kts gradle.properties ./
 COPY gradle ./gradle
+RUN gradle dependencies --no-daemon --quiet || true
+
+# Copy source and build
 COPY src ./src
 RUN gradle shadowJar --no-daemon
 

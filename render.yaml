@@ -2,6 +2,7 @@ services:
   - type: web
     name: paircanvas-signalling-server
     runtime: docker
+    dockerfilePath: ./Dockerfile.render
     plan: free
     envVars:
       - key: PORT
