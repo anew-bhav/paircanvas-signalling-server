@@ -52,6 +52,8 @@ fun main() {
                 ignoreUnknownKeys = true
                 encodeDefaults = true
             })
+            pingPeriod = java.time.Duration.ofSeconds(15)
+            timeout = java.time.Duration.ofSeconds(20)
         }
 
         val rooms = ConcurrentHashMap<String, Room>()
