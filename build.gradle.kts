@@ -15,6 +15,8 @@ dependencies {
     implementation("io.ktor:ktor-server-core:2.3.7")
     implementation("io.ktor:ktor-server-netty:2.3.7")
     implementation("io.ktor:ktor-server-websockets:2.3.7")
+    // Required by /rooms/{id}: call.respond of a @Serializable class 406s without it.
+    implementation("io.ktor:ktor-server-content-negotiation:2.3.7")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
     implementation("ch.qos.logback:logback-classic:1.4.11")
 }
